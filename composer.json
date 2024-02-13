@@ -7,6 +7,11 @@
             "Syauqi\\PhpUnittest\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Syauqi\\Test\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "yes"
