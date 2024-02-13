@@ -3,6 +3,7 @@
 namespace Syauqi\PhpUnittest;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Assert;
 
 class CounterTest extends TestCase
 {
@@ -10,6 +11,10 @@ class CounterTest extends TestCase
       {
             $counter = new Counter();
             $counter->incre();
-            echo $counter->getCount() . PHP_EOL;
+            Assert::assertEquals(1, $counter->getCount());
+            $counter->incre();
+            Assert::assertEquals(2, $counter->getCount());
+            $counter->incre();
+            Assert::assertEquals(3, $counter->getCount());
       }
 }
