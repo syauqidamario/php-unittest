@@ -13,4 +13,8 @@ class Person
             if ($name == null) throw new \Exception('No name!');
             return "Hi $name, my name is $this->name";
       }
+
+      public function sayGoodBye(?string $name):void{
+          echo "Goodbye $name" . PHP_EOL;
+      }
 }
