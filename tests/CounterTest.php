@@ -35,6 +35,13 @@ class CounterTest extends TestCase
         self::assertEquals(3, $this->count->getCount());
     }
 
+    public function incre(){
+        self:self::markTestSkipped("Skip unit test");
+        self::assertEquals(0, $this->count->getCount());
+        $this->count->incre();
+        Assert::assertEquals(1, $this->count->getCount());
+    }
+
     public function testFirst(): Counter
     {
         $this->count->incre();
