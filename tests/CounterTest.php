@@ -2,47 +2,58 @@
 
 namespace Syauqi\PhpUnittest;
 
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\TestCase;
 
 class CounterTest extends TestCase
 {
-      public function testCounter()
-      {
-            $counter = new Counter();
-            $counter->incre();
-            Assert::assertEquals(1, $counter->getCount());
-            $counter->incre();
-            Assert::assertEquals(2, $counter->getCount());
-            $counter->incre();
-            Assert::assertEquals(3, $counter->getCount());
-      }
+    private Counter $count;
 
-      /**
-       * @test
-       */
-      public function increment()
-      {
-            $counter = new Counter();
-            $counter->incre();
-            $this->assertEquals(1, $counter->getCount());
-      }
+    protected function setUp():void
+    {
+        $this->count = new Counter();
+        echo "Creating a counter" . PHP_EOL;
+    }
 
-      public function testFirst(): Counter
-      {
-            $counter = new Counter();
-            $counter->incre();
-            $this->assertEquals(1, $counter->getCount());
-            return $counter;
-      }
+    public function testCounter()
+    {
+        $this->count->incre();
+        Assert::assertEquals(1, $this->count->getCount());
 
-      /**
-       * @depends testFirst
-       */
+        $this->count->incre();
+        $this->assertEquals(2, $this->count->getCount());
 
-      public function testSecond(Counter $counter)
-      {
-            $counter->incre();
-            $this->assertEquals(2, $counter->getCount());
-      }
+        $this->count->incre();
+        self::assertEquals(3, $this->count->getCount());
+    }
+
+    public function testFirst(): Counter
+    {
+        $this->count->incre();
+        $this->assertEquals(1, $this->count->getCount());
+
+        return $this->count;
+    }
+
+    /**
+     * @depends testFirst
+     */
+    public function testSecond(Counter $counter): void
+    {
+        $counter->incre();
+        $this->assertEquals(2, $counter->getCount());
+    }
+
+    protected function tearDown(): void
+    {
+        echo "Tear Down" . PHP_EOL;
+    }
+
+    /**
+     * @after
+     */
+    protected function after(): void
+    {
+        echo "After" . PHP_EOL;
+    }
 }

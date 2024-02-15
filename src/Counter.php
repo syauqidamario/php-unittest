@@ -2,6 +2,9 @@
 
 namespace Syauqi\PhpUnittest;
 
+use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Constraint\Count;
+
 class Counter
 {
       private int $count = 0;

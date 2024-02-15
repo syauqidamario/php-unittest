@@ -6,10 +6,19 @@ use PHPUnit\Framework\TestCase;
 
 class PersonTest extends TestCase
 {
+    private Person $person;
+    /**
+     *@before
+     */
+    public function createPerson():void{
+        $this->person = new Person("Syauqi");
+    }
+    protected function setUp():void{
+        $this->person = new Person("Syauqi");
+    }
       public function testSuccess()
       {
-            $person = new Person("Syauqi");
-            self::assertEquals("Hi Johnny, my name is Syauqi", $person->sayHi("Syauqi"));
+           self::assertEquals("Hi Johnny, my name is Syauqi", $this->person->sayHi("Johnny"));
       }
 
       public function testException()
