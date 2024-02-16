@@ -7,14 +7,14 @@ use Syauqi\PhpUnittest\Product;
 use Syauqi\PhpUnittest\ProductRepository;
 use Syauqi\PhpUnittest\ProductService;
 
-class ProductServiceTest extends TestCase
+class ProductServiceMockTest extends TestCase
 {
     private ProductRepository $repository;
     private ProductService $service;
 
     protected function setUp(): void
     {
-        $this->repository = $this->createStub(ProductRepository::class);
+        $this->repository = $this->createMock(ProductRepository::class);
         $this->service = new ProductService($this->repository);
     }
 
@@ -97,16 +97,25 @@ class ProductServiceTest extends TestCase
     public function testDelete(){
         $product = new Product();
         $product->setId("1");
-
-        $this->repository->method("findById")->willReturn($product);
+        $this->repository->expects($this->once()->method("delete"))->with(self::equalTo($product));
+        $this->repository->expects($this->once()->method("findById")->with(self::equalTo($product->getId()))->willReturn($product));
         $this->service->delete("1");
         self::assertTrue(true, "Success delete");
     }
 
     public function testDeleteFailed(){
+        $this->repository->expects($this->never())->method("delete");
+        $this->repository->expects($this->once())->method("findById")->with(self::equalTo("1"))->willReturn(null);
         $this->expectException(\Exception::class);
-        $this->repository->method("findById")->willReturn(null);
         $this->service->delete("1");
+    }
+
+    public function testMock(){
+        $product = new Product();
+        $product->setId("1");
+        $this->repository->expects($this->once())->method("findById")->willReturn($product);
+        $result = $this->repository->findById("1");
+        self::assertSame($product, $result);
     }
 
 
